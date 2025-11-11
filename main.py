@@ -73,8 +73,6 @@ def get_playlist_songs(playlist_id):
             break
     return songs
 
-playlist_2 = [pl for pl in playlists if "prius" in pl["snippet"]["title"].lower()]
-
 # Spotify search is weird with special characters and some
 def sanitize_song(song):
     # Remove " - Topic", parentheses content, etc.
@@ -103,7 +101,7 @@ def chunks(lst, n):
         yield lst[i:i + n]
 
 # Move each playlist to Spotify
-for pl in playlist_2:
+for pl in playlists:
     playlist_title = pl["snippet"]["title"]
     playlist_id = pl["id"]
     print(f"\nPlaylist: {playlist_title}")
@@ -125,4 +123,5 @@ for pl in playlist_2:
 
     if len(spotify_uris) > 0:
         for batch in chunks(spotify_uris, 100):
+
             sp.playlist_add_items(playlist_id=playlist['id'], items=batch)
